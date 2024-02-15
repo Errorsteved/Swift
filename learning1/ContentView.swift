@@ -10,33 +10,41 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         HStack{
-            VStack {
-                Image(systemName: "globe")
-                    .imageScale(.large)
-                Text("Hello, world!").foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
-                CardView()
-            }
+            CardView()
             CardView(isFaceUp: false)
             CardView()}
     }
 }
 
 struct CardView:View {
-    var isFaceUp: Bool = true
+    var base: RoundedRectangle = RoundedRectangle(cornerRadius: 12)
+    //let base = Circle()
+    @State var isFaceUp: Bool = true
+    
     var body: some View {
         ZStack(content: {
             if isFaceUp{
-                Text("你好").font(.system(size: 50)).foregroundColor(.green)
-                RoundedRectangle(cornerRadius: 12)
-                    .strokeBorder(lineWidth: 2)
+                base.foregroundColor(.white)
+                Text("你好").font(.system(size: 30)).foregroundColor(.green)
+                base.strokeBorder(lineWidth: 2)
                 //.foregroundColor(.white)
             }
             else{
-                RoundedRectangle(cornerRadius: 12)
+                base
+                VStack {
+                    Image(systemName: "globe")
+                        .imageScale(.large)
+                        .foregroundColor(.white)
+                    Text("Hello, world!").foregroundColor(.white)
+                }
             }
         })
         .foregroundColor(.orange)
         .padding()
+        .onTapGesture {
+            print("tapped")
+            isFaceUp = !isFaceUp
+        }
     }
 }
 
